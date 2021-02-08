@@ -1,0 +1,45 @@
+.container {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+#canvas {
+  width: 450px;
+  height: 900px;
+}
+
+.container_description {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+.container_description_title {
+  width: 300px;
+  height: 100px;
+  color: black;
+  font-size: 54px;
+  font-weight: bold;
+}
+.container_description .start {
+  background-color: white;
+  border: 1px solid black;
+  font-size: 36px;
+  padding: 20px;
+}
+.container_description .start:hover {
+  background-color: red;
+  color: white;
+}
+.container_description .your_score {
+  background-color: blue;
+  color: white;
+  margin-top: 30px;
+  font-size: 20px;
+}
+.container_description .score {
+  background-color: blue;
+  color: white;
+  font-size: 40px;
+}
+
+/*# sourceMappingURL=styles.css.map */
