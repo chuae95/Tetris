@@ -19,19 +19,47 @@ let game_grid = [10, 20];
 let grid_array = [];
 context.scale(canvas.width/10, canvas.height/20);
 let pieceCount = 0;
+let colors = ["blue", "green", "yellow", "pink", "red"];
 let pieceGenerator = [
     [
         [1,1],
         [1,1]
+    ],
+    [
+        [0,1,1],
+        [1,1,0]
+    ],
+    [
+        [1,1,0],
+        [0,1,1]
+    ],
+    [
+        [1,1,1],
+        [0,1,0]
+    ],
+    [
+        [1,0,0],
+        [1,1,1]
+    ],
+    [
+        [0,0,1],
+        [1,1,1]
+    ],
+    [
+        [1],
+        [1],
+        [1],
+        [1],
     ]
 ]
 
 let pieces = [{
     x: 0,
     y: 0,
-    config: pieceGenerator[0],
+    config: pieceGenerator[Math.floor(Math.random() * pieceGenerator.length)],
     active: true,
-    collide: 0
+    collide: 0,
+    color: colors[Math.floor(Math.random()*colors.length)]
 }]
 
 //This set of variables are for the users' control
@@ -60,12 +88,13 @@ for (let y = 0; y < game_grid[1]; y++) {
 //Creating the first piece in the game
 
 function draw() {
-    context.fillStyle = "red";
     checkGrid();
+    drawGrid();
     pieces.forEach((piece, i) => {
         piece.config.forEach((row, y) => {
             row.forEach((value, x) => {
                 if (value != 0) {
+                    context.fillStyle = pieces[i].color;
                     context.fillRect(x + pieces[i].x, y + pieces[i].y, 1, 1);
                 }
             })
@@ -136,17 +165,19 @@ function checkMove() {
     if (pieces[pieceCount].x + pieces[pieceCount].config[0].length > 10) {
         pieces[pieceCount].x -= 1;
     }
-
 }
+
 
 function generateNewPiece() {
     pieces.push({
         x: 0,
         y: 0,
-        config: pieceGenerator[0],
+        config: pieceGenerator[Math.floor(Math.random() * pieceGenerator.length)],
         active: true,
-        collide: 0
+        collide: 0,
+        color: colors[Math.floor(Math.random()*colors.length)]
     })
+    console.log(pieces[pieceCount].colors)
     pieceCount += 1;
 }
 
@@ -171,16 +202,6 @@ function checkCollide() {
                 if (grid_array[y + pieces[pieceCount].y][x + pieces[pieceCount].x] != 0) {
                     pieces[pieceCount].y -= 1;
                     pieces[pieceCount].collide += 1;
-                    // if (dir == "down") {
-                    //     pieces[pieceCount].y -= 1;
-                    //     pieces[pieceCount].collide += 1;
-                    // }
-                    // if (dir == "left") {
-                    //     pieces[pieceCount].x += 1;
-                    // }
-                    // if (dir == "right") {
-                    //     pieces[pieceCount].x -= 1;
-                    // }
                     if (pieces[pieceCount].collide > 2) {
                         pieces[pieceCount].active = false;
                         generateNewPiece();
@@ -199,11 +220,10 @@ function checkGrid() {
             grid_array.splice(a, 1);
             grid_array.unshift(new Array(10).fill(0));
             console.log(grid_array);
-
-            for (const piece of pieces) {
-                if (piece.y <= a) {
-                    piece.y += 1;
-                }
+        }
+        for (const piece of pieces) {
+            if (piece.y < a) {
+                piece.y += 1;
             }
         }
     }
