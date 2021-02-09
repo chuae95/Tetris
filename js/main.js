@@ -240,10 +240,10 @@ document.addEventListener("keydown", event => {
 
 function dropMax() {
     if (game == true && interval > 0) {
-        player.pos.y += 20;
-        while (collide(grid_array, player)) {
-            player.pos.y -= 1;
+        while (collide(grid_array, player) != true) {
+            player.pos.y += 1;
         }
+        player.pos.y -= 1;
         merge(grid_array, player);
         player.swap = false;
         playerReset(); //creates a new piece
@@ -270,6 +270,7 @@ function playerDrop() { //this function means that when the piece moves 1 grid d
             merge(grid_array, player);
             playerReset(); //creates a new piece
             gridSweep();
+            player.swap = false;
         }
         timeLapse = 0;
     }
