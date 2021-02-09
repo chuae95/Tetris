@@ -12,235 +12,357 @@ Logic: Create a grid of "0"s and use "1"s to indicate if a space is already fill
 
  */
 
-//Start by creating the game grid with black background
-let canvas = document.querySelector('#canvas');
-let context = canvas.getContext('2d'); //This is needed for implementing 2d animations
-let game_grid = [10, 20];
+let canvas = document.querySelector("#canvas");
+let context = canvas.getContext("2d");
+let game_grid = [10,20]
 let grid_array = [];
-context.scale(canvas.width/10, canvas.height/20);
-let pieceCount = 0;
-let colors = ["blue", "green", "yellow", "pink", "red"];
-let pieceGenerator = [
-    [
-        [1,1],
-        [1,1]
-    ],
-    [
-        [0,1,1],
-        [1,1,0]
-    ],
-    [
-        [1,1,0],
-        [0,1,1]
-    ],
-    [
-        [1,1,1],
-        [0,1,0]
-    ],
-    [
-        [1,0,0],
-        [1,1,1]
-    ],
-    [
-        [0,0,1],
-        [1,1,1]
-    ],
-    [
-        [1],
-        [1],
-        [1],
-        [1],
-    ]
-]
+context.scale(60,60);
+const pieces = "ILJOTSZ";
+let score = document.querySelector(".score");
+let points = 0;
+let game = false;
+let start = document.querySelector(".start");
+let startGame = document.querySelector(".start");
+let myMusic = document.querySelector("#audio");
+let line = document.querySelector("#line");
+let music = false;
+let gameOver = document.querySelector(".modal");
+let easy = document.querySelector(".easy");
+let hard = document.querySelector(".hard");
+let welcome = document.querySelector(".welcome");
+let difficultyPrompt = document.createElement("img");
+let prompt = document.querySelector(".prompt");
+let restart = document.querySelectorAll(".yes");
+difficultyPrompt.setAttribute("class" , "difficultyPrompt");
+difficultyPrompt.src = "../project_1/media/angry.gif";
 
-let pieces = [{
-    x: 0,
-    y: 0,
-    config: pieceGenerator[Math.floor(Math.random() * pieceGenerator.length)],
-    active: true,
-    collide: 0,
-    color: colors[Math.floor(Math.random()*colors.length)]
-}]
-
-//This set of variables are for the users' control
-let dir = "";
-
-//This set of variables deal with the dropping of pieces by a specified time interval
-let timeInterval = 1000;
-let lastTime = 0;
-let timeCheck = 0;
-
-//this create the grid for game
-function drawGrid() {
-    context.fillStyle = "black";
-    context.fillRect(0,0, game_grid[0], game_grid[1]);
-}
-drawGrid();
-
-//this creates the supporting array and will provide a way to check the logic
-for (let y = 0; y < game_grid[1]; y++) {
-    grid_array.push([]);
-    for (let x = 0; x < game_grid[0]; x++) {
-        grid_array[y].push(0);
+function gridSweep() {
+    outer: for (let y = grid_array.length - 1; y > 0 ; y--) {
+        for (let x = 0; x < grid_array[y].length; x++) {
+            if (grid_array[y][x] === 0) {
+                continue outer;
+            }
+        }
+        line.play();
+        const row = grid_array.splice(y, 1)[0].fill(0);
+        grid_array.unshift(row);
+        y++;
+        points += 50;
+        score.textContent = "";
+        score.textContent = points.toString();
     }
 }
 
-//Creating the first piece in the game
+function collide(grid_array, player) {
+    const [m, o] = [player.matrix, player.pos];
+    for (let y = 0; y < m.length; y++) {
+        for (let x = 0; x < m[y].length ;x++) {
+            if (m[y][x] !== 0 && (grid_array[y + o.y] && grid_array[y + o.y][x + o.x]) !== 0) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
 
-function draw() {
-    checkGrid();
-    drawGrid();
-    pieces.forEach((piece, i) => {
-        piece.config.forEach((row, y) => {
-            row.forEach((value, x) => {
-                if (value != 0) {
-                    context.fillStyle = pieces[i].color;
-                    context.fillRect(x + pieces[i].x, y + pieces[i].y, 1, 1);
-                }
-            })
+function createPiece(type) {
+    if (type == "T") {
+        return [
+            [0,0,0],
+            [1,1,1],
+            [0,1,0]
+        ];
+    } else if (type == "O") {
+        return [
+            [2,2],
+            [2,2]
+        ];
+    } else if (type == "L") {
+        return [
+            [0,3,0],
+            [0,3,0],
+            [0,3,3]
+        ];
+    } else if (type == "J") {
+        return [
+            [0,4,0],
+            [0,4,0],
+            [4,4,0]
+        ];
+    } else if (type == "I") {
+        return [
+            [0,5,0,0],
+            [0,5,0,0],
+            [0,5,0,0],
+            [0,5,0,0]
+        ];
+    } else if (type == "S") {
+        return [
+            [0,6,6],
+            [6,6,0],
+            [0,0,0]
+        ];
+    } else if (type == "Z") {
+        return [
+            [7,7,0],
+            [0,7,7],
+            [0,0,0]
+        ];
+    }
+}
+
+for (let r = 0; r < game_grid[1]; r++) {
+    grid_array.push([]);
+    for (let c = 0; c < game_grid[0]; c++) {
+        grid_array[r].push(0);
+    }
+}
+
+function merge(arena, player) {
+    player.matrix.forEach((row, y) => {
+        row.forEach((value, x) => {
+            if (value != 0) {
+                grid_array[y + player.pos.y][x + player.pos.x] = value; //this will update the values in the array we created above.
+            }
         })
     })
+
 }
 
-//Create the logic to move the piece on a one second interval;
+
+function drawMatrix(matrix, offset) { //offset will keep track of how much the pieces have been moved
+    matrix.forEach((row, y) => {
+        row.forEach((value, x) => {
+            if (value !== 0) {
+                context.fillStyle = colors[value];
+                context.fillRect(x + offset.x, y + offset.y, 1, 1);
+            }
+        })
+    });
+}
+
+let lastTime = 0;
+let timeLapse = 0;
+let interval = 0;
+const colors = [null, "red", "blue", "green", "yellow", "purple", "orange", "brown"];
+
 function update(time = 0) {
-    let timeLapse = time - lastTime;
+    const timeDiff = time - lastTime;
     lastTime = time;
-    timeCheck += timeLapse;
-    checkCollide();
-    if (timeCheck > timeInterval && pieces[pieceCount].active == true) {
-        pieces[pieceCount].y += 1;
-        checkMove();
-        timeInterval += 1000;
+    timeLapse += timeDiff;
+    if (timeLapse > interval) {
+        playerDrop();
     }
-    drawGrid();
     draw();
     requestAnimationFrame(update);
 }
 
-//Create the listeners for keydown events
-document.addEventListener('keydown', function(e) {
-    if (e.keyCode == 37) {
-        dir = "left"
-    } else if (e.keyCode == 39) {
-        dir = "right"
-    } else if (e.keyCode == 40) {
-        dir = "down"
+function playerMove(dir) { //this prevent the grid from exiting on the right/left or intersects with other pieces
+    player.pos.x += dir;
+    if (collide(grid_array, player)) {
+        player.pos.x -= dir;
     }
-    move();
+}
+
+function playerReset() {
+
+    player.matrix = createPiece(pieces[Math.floor(Math.random() * pieces.length)]);
+    player.pos.y = 0;
+    player.pos.x = Math.floor(grid_array[0].length/2) - Math.floor(player.matrix[0].length / 2);
+    if (collide(grid_array, player)) { //this is the condition that checks if there is a collision with the top of the map
+        grid_array.forEach(row => row.fill(0));
+        game = false;
+        gameOver.style.display = "flex";
+        myMusic.pause();
+        music = false;
+        player.swap = false;
+    }
+}
+
+const player = {
+    pos: {x:4, y: 0},
+    matrix: createPiece(pieces[Math.floor(Math.random() * pieces.length)]),
+    swap: false
+}
+
+function rotate(matrix, dir) {
+    for (let y = 0; y < matrix.length; y++) {
+        for (let x = 0; x < y; x++) {
+            [
+                matrix[x][y],
+                matrix[y][x]
+            ] = [
+                matrix[y][x],
+                matrix[x][y]
+            ]
+        }
+    }
+    if (dir > 0) {
+        matrix.forEach(row => row.reverse());
+    } else {
+        matrix.reverse();
+    }
+}
+
+function playerRotate(dir) {
+    const pos = player.pos.x;
+    let offset = 1;
+    rotate(player.matrix, dir);
+    while (collide(grid_array, player)) {
+        player.pos.x += offset; //check to the right
+        offset = -(offset + (offset > 0 ? 1 : -1));
+        if (offset > player.matrix[0].length) {
+            rotate(player.matrix, -dir);
+            player.pos.x = pos;
+            return;
+        }
+    }
+}
+
+
+document.addEventListener("keydown", event => {
+    console.log(event.key);
+    if (event.key === "ArrowLeft") {
+        playerMove(-1);
+    } else if (event.key === "ArrowRight") {
+        playerMove(1);
+    } else if (event.key === "ArrowDown") {
+        playerDrop();
+    } else if (event.key === "q") {
+        playerRotate(-1);
+    } else if (event.key === "e") {
+        playerRotate(1);
+    } else if (event.key === " ") {
+        dropMax();
+    } else if (event.key === "z") {
+        swap();
+    }
 })
 
-function move() {
-    if (dir == "left" && pieces[pieceCount].active == true) {
-        pieces[pieceCount].x -= 1;
-        //create an if logic here to test the arr matrix of false squares
-    } else if (dir == "right" && pieces[pieceCount].active == true) {
-        pieces[pieceCount].x += 1;
-        pieces[pieceCount].config.forEach((rows, y) => {
-            rows.forEach((value, x) => {
-                if (value != 0) {
-                    if (grid_array[y + pieces[pieceCount].y][x + pieces[pieceCount].x] != 0) {
-                        pieces[pieceCount].x -= 1;
-                    }
-                }
-            })
-        })
-    } else if (dir == "down" && pieces[pieceCount].active == true) {
-        pieces[pieceCount].y += 1;
-    }
-    checkMove();
-    draw();
-}
-
-function checkMove() {
-    if (pieces[pieceCount].y + pieces[pieceCount].config.length > 20) {
-        pieces[pieceCount].active = false;
-        pieces[pieceCount].y -= 1;
-        generateNewPiece();
-        updateGrid();
-    }
-    if (pieces[pieceCount].x - pieces[pieceCount].config[0].length < -pieces[pieceCount].config[0].length) {
-        pieces[pieceCount].x += 1;
-    }
-    if (pieces[pieceCount].x + pieces[pieceCount].config[0].length > 10) {
-        pieces[pieceCount].x -= 1;
-    }
-}
-
-
-function generateNewPiece() {
-    pieces.push({
-        x: 0,
-        y: 0,
-        config: pieceGenerator[Math.floor(Math.random() * pieceGenerator.length)],
-        active: true,
-        collide: 0,
-        color: colors[Math.floor(Math.random()*colors.length)]
-    })
-    console.log(pieces[pieceCount].colors)
-    pieceCount += 1;
-}
-
-function updateGrid() {
-    for (const piece of pieces) {
-        if (piece.active == false && piece.y < 19) {
-            piece.config.forEach((rows,y) => {
-                rows.forEach((value, x) => {
-                    if (value != 0) {
-                        grid_array[y + piece.y][x + piece.x] = value;
-                    }
-                })
-            })
+function dropMax() {
+    if (game == true && interval > 0) {
+        player.pos.y += 20;
+        while (collide(grid_array, player)) {
+            player.pos.y -= 1;
         }
+        merge(grid_array, player);
+        player.swap = false;
+        playerReset(); //creates a new piece
+        gridSweep();
+        timeLapse = 0;
     }
 }
 
-function checkCollide() {
-    pieces[pieceCount].config.forEach((rows, y) => {
-        rows.forEach((value, x) => {
-            if (value != 0) {
-                if (grid_array[y + pieces[pieceCount].y][x + pieces[pieceCount].x] != 0) {
-                    pieces[pieceCount].y -= 1;
-                    pieces[pieceCount].collide += 1;
-                    if (pieces[pieceCount].collide > 2) {
-                        pieces[pieceCount].active = false;
-                        generateNewPiece();
-                        updateGrid();
-                    }
-                }
+
+function draw() {
+    if (game == true && interval > 0) {
+        context.fillStyle = "black"; //will "reset" the canvas
+        context.fillRect(0, 0, canvas.width, canvas.height);
+        drawMatrix(grid_array, {x: 0, y: 0})
+        drawMatrix(player.matrix, player.pos); //this will call the function
+    }
+}
+
+function playerDrop() { //this function means that when the piece moves 1 grid down, the timer is reset
+    if (game == true && interval > 0) {
+        player.pos.y += 1;
+        if (collide(grid_array, player)) {
+            player.pos.y -= 1;
+            merge(grid_array, player);
+            playerReset(); //creates a new piece
+            gridSweep();
+        }
+        timeLapse = 0;
+    }
+};
+
+easy.addEventListener("click", function(){
+    interval = 1000;
+    difficultyPrompt.style.display = "none";
+    welcome.textContent = "Welcome and Enjoy!Select a difficulty level to begin"
+    prompt.style.backgroundImage = "None";
+})
+
+hard.addEventListener("click", function() {
+    interval = 500;
+    difficultyPrompt.style.display = "none";
+    welcome.textContent = "Welcome and Enjoy!Select a difficulty level to begin";
+    prompt.style.backgroundImage = "None";
+})
+
+startGame.addEventListener("click", function() {
+    if (game == false && interval > 0) {
+        game = true;
+        draw();
+        generateSpare();
+        update();
+        if (music == false) {
+            myMusic.play();
+            music = true;
+        } else {
+            myMusic.pause();
+            music = false;
+        }
+    } else {
+        welcome.textContent = "Seriously? Select a difficulty level!"
+        prompt.style.backgroundImage = "url('../project_1/media/angry.gif')";
+    }
+
+})
+
+restart.forEach((button) => {
+    button.addEventListener("click", function() {
+        interval = 0;
+        gameOver.style.display = "none";
+        context.fillStyle = "black";
+        context.fillRect(0,0,game_grid[0],game_grid[1])
+        context2.fillStyle = "black";
+        context2.fillRect(0, 0, storage.width, storage.height);
+    })
+})
+
+let storage = document.querySelector("#storage");
+let context2 = storage.getContext("2d");
+context2.scale(40,40);
+
+context2.fillStyle = "black";
+context2.fillRect(0,0,storage.width,storage.height);
+
+let spare = [];
+let temp = [];
+
+function generateSpare() {
+    spare = createPiece(pieces[Math.floor(Math.random() * pieces.length)]);
+    spare.forEach((row, y) => {
+        row.forEach((value, x) => {
+            if (value !== 0) {
+                context2.fillStyle = colors[value];
+                context2.fillRect(x, y, 1, 1);
             }
         })
     })
 }
 
-function checkGrid() {
-    for (let a = 0; a < game_grid[1]; a++) {
-        if (grid_array[a].indexOf(0) < 0) {
-            console.log(a);
-            grid_array.splice(a, 1);
-            grid_array.unshift(new Array(10).fill(0));
-            console.log(grid_array);
-        }
-        for (const piece of pieces) {
-            if (piece.y < a) {
-                piece.y += 1;
-            }
-        }
+
+
+function swap() {
+    if (player.swap == false) {
+        player.swap = true;
+        context2.fillStyle = "black";
+        context2.fillRect(0, 0, storage.width, storage.height);
+        temp = player.matrix;
+        player.matrix = spare;
+        spare = temp;
+        temp = [];
+        player.pos.x = Math.floor(grid_array[0].length / 2) - Math.floor(player.matrix[0].length / 2);
+        player.pos.y = 0;
+        spare.forEach((row, y) => {
+            row.forEach((value, x) => {
+                if (value !== 0) {
+                    context2.fillStyle = colors[value];
+                    context2.fillRect(x, y, 1, 1);
+                }
+            })
+        })
     }
 }
-let start = document.querySelector(".start");
-
-start.addEventListener("click", function() {
-    update()
-});
-
-
-
-
-
-
-
-
-
-
-
