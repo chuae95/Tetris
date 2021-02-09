@@ -100,8 +100,6 @@ body {
 
     }
   }
-
-
 }
 
 .container_2 {
@@ -111,6 +109,39 @@ body {
 }
 
 .modal {
-  display: none;
+  position: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+  top: 10%;
+  left: 10%;
+  width: 80%;
+  height: 80%;
+  background-image: url("media/elmo.gif");
+  color: white;
+  font-size: 120px;
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+
+  .options {
+    display: flex;
+    justify-content: space-around;
+
+
+    .yes {
+      margin-top: 40px;
+      width: 300px;
+      height: 100px;
+      background-color: white;
+      color: black;
+      font-size: 50px;
+      padding-top: 30px;
+    }
+
+
+  }
+
+
 }
 
