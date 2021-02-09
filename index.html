@@ -8,6 +8,7 @@
     <title>Tetris V1.1</title>
     <link href = "styles.css" rel = "stylesheet">
 </head>
+
 <body>
 
 <div class = "container">
@@ -30,13 +31,21 @@
 
             <div class = "settings">
 
-                <div class = "easy"></div>
+                <div class = "welcome">Welcome and Enjoy!Select a difficulty level to begin</div>
 
-                <div class = "hard"></div>
+                <div class = "options">
 
-                <div class = "welcome"></div>
+                    <div class = "easy">Easy</div>
 
-                <canvas id = "storage" width = "200" height = "200"></canvas>
+                    <div class = "hard">Hard</div>
+
+                </div>
+
+            </div>
+
+            <div class = "store">
+
+            <canvas id = "storage" width = "200" height = "200"></canvas>
 
             </div>
 
@@ -45,7 +54,6 @@
     </div>
 
 </div>
-
 
 <div class = "container_2"></div>
 
@@ -59,12 +67,11 @@
 
 </div>
 
-
-
+<audio id = "audio" src = "media/tetris-bg.mp3"></audio>
+<audio id = "line" src = "media/line.wav"></audio>
 
 <script src = "js/main.js"></script>
-<audio src = "/media/tetris-bg.mp3"></audio>
-<audio src = "/media/line.mp3"></audio>
+
 
 
 </body>

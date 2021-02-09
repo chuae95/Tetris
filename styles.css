@@ -1,6 +1,8 @@
 body {
   display: grid;
-  grid-area: 1fr/60% 40%;
+  grid-area: 1fr/65% 35%;
+  width: 100VW;
+  height: 100Vh;
 }
 
 .container {
@@ -14,24 +16,74 @@ body {
   height: 80%;
   background-color: black;
   display: grid;
-  grid-template-columns: 50% 50%;
+  grid-template: 1fr 1fr/50% 50%;
   border: 3px solid white;
+  font-size: 30px;
 }
 .container .gameboy #canvas {
-  grid-column: 1;
+  grid-area: 1/1/5/2;
   border: 1px solid white;
 }
 .container .gameboy .description {
-  grid-column: 2;
+  text-align: center;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .container .gameboy .description .start {
+  margin-top: 50px;
   background-color: white;
+  width: 80%;
+  height: 60px;
+}
+.container .gameboy .description .start:hover {
+  background-color: red;
+  color: white;
 }
 .container .gameboy .description .your_score {
+  margin-top: 50px;
   background-color: white;
+  width: 80%;
+  height: 100px;
 }
 .container .gameboy .description .settings {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  height: 150px;
+  margin-top: 50px;
   background-color: white;
+}
+.container .gameboy .description .settings .welcome {
+  font-size: 20px;
+  width: 100%;
+  height: 50px;
+}
+.container .gameboy .description .settings .options {
+  display: flex;
+  justify-content: space-evenly;
+}
+.container .gameboy .description .settings .options .easy {
+  width: 40%;
+  height: 100px;
+  background-color: green;
+  color: white;
+}
+.container .gameboy .description .settings .options .hard {
+  width: 40%;
+  height: 100px;
+  background-color: red;
+  color: white;
+}
+.container .gameboy .description .store {
+  width: 80%;
+  height: 250px;
+  margin-top: 50px;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .container_2 {

@@ -22,18 +22,14 @@ let score = document.querySelector(".score");
 let points = 0;
 let game = false;
 let start = document.querySelector(".start");
-let myMusic = document.querySelector("#audio");
+let myMusic = document.getElementById("audio");
 let line = document.querySelector("#line");
 let music = false;
 let gameOver = document.querySelector(".modal");
 let easy = document.querySelector(".easy");
 let hard = document.querySelector(".hard");
 let welcome = document.querySelector(".welcome");
-let difficultyPrompt = document.createElement("img");
-let prompt = document.querySelector(".prompt");
 let restart = document.querySelectorAll(".yes");
-difficultyPrompt.setAttribute("class" , "difficultyPrompt");
-difficultyPrompt.src = "../project_1/media/angry.gif";
 let storage = document.querySelector("#storage");
 let context2 = storage.getContext("2d");
 let spare = [];
@@ -281,16 +277,12 @@ function playerDrop() { //this function means that when the piece moves 1 grid d
 
 easy.addEventListener("click", function(){
     interval = 1000;
-    difficultyPrompt.style.display = "none";
-    welcome.textContent = "Welcome and Enjoy!Select a difficulty level to begin"
-    prompt.style.backgroundImage = "None";
+    welcome.textContent = "Welcome and Enjoy!Select a difficulty level to begin";
 })
 
 hard.addEventListener("click", function() {
     interval = 500;
-    difficultyPrompt.style.display = "none";
     welcome.textContent = "Welcome and Enjoy!Select a difficulty level to begin";
-    prompt.style.backgroundImage = "None";
 })
 
 start.addEventListener("click", function() {
@@ -308,7 +300,6 @@ start.addEventListener("click", function() {
         }
     } else {
         welcome.textContent = "Seriously? Select a difficulty level!"
-        prompt.style.backgroundImage = "url('../project_1/media/angry.gif')";
     }
 
 })
