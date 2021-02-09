@@ -22,7 +22,6 @@ let score = document.querySelector(".score");
 let points = 0;
 let game = false;
 let start = document.querySelector(".start");
-let startGame = document.querySelector(".start");
 let myMusic = document.querySelector("#audio");
 let line = document.querySelector("#line");
 let music = false;
@@ -35,6 +34,10 @@ let prompt = document.querySelector(".prompt");
 let restart = document.querySelectorAll(".yes");
 difficultyPrompt.setAttribute("class" , "difficultyPrompt");
 difficultyPrompt.src = "../project_1/media/angry.gif";
+let storage = document.querySelector("#storage");
+let context2 = storage.getContext("2d");
+let spare = [];
+let temp = [];
 
 function gridSweep() {
     outer: for (let y = grid_array.length - 1; y > 0 ; y--) {
@@ -290,7 +293,7 @@ hard.addEventListener("click", function() {
     prompt.style.backgroundImage = "None";
 })
 
-startGame.addEventListener("click", function() {
+start.addEventListener("click", function() {
     if (game == false && interval > 0) {
         game = true;
         draw();
@@ -321,15 +324,9 @@ restart.forEach((button) => {
     })
 })
 
-let storage = document.querySelector("#storage");
-let context2 = storage.getContext("2d");
 context2.scale(40,40);
-
 context2.fillStyle = "black";
 context2.fillRect(0,0,storage.width,storage.height);
-
-let spare = [];
-let temp = [];
 
 function generateSpare() {
     spare = createPiece(pieces[Math.floor(Math.random() * pieces.length)]);
