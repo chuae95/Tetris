@@ -34,6 +34,8 @@ let storage = document.querySelector("#storage");
 let context2 = storage.getContext("2d");
 let spare = [];
 let temp = [];
+let a = 0;
+let b = 10;
 
 function gridSweep() {
     outer: for (let y = grid_array.length - 1; y > 0 ; y--) {
@@ -46,6 +48,11 @@ function gridSweep() {
         const row = grid_array.splice(y, 1)[0].fill(0);
         grid_array.unshift(row);
         y++;
+        a++
+        if (a >  b) {
+            interval -= 500;
+            b += 5;
+        }
         points += 50;
         score.textContent = "";
         score.textContent = points.toString();
@@ -220,7 +227,6 @@ function playerRotate(dir) {
 
 
 document.addEventListener("keydown", event => {
-    console.log(event.key);
     if (event.key === "ArrowLeft") {
         playerMove(-1);
     } else if (event.key === "ArrowRight") {
@@ -316,7 +322,7 @@ restart.forEach((button) => {
     })
 })
 
-context2.scale(40,40);
+context2.scale(30,30);
 context2.fillStyle = "black";
 context2.fillRect(0,0,storage.width,storage.height);
 
