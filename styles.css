@@ -407,6 +407,7 @@ body {
   border-radius: 50%;
 }
 .start-screen-gameboy-screen-animation {
+  font-size: 60px;
   width: 80%;
   height: 90%;
   background-color: #c9c9ab;

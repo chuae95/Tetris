@@ -8,7 +8,7 @@ Logic: Create a grid of "0"s and use "1"s to indicate if a space is already fill
 5.The grid should only be updated when the fix is deemed to be at the bottom or has labnded on a separate piece. This is when a second piece should be generated
 6
 5.If the values cannot be updated, then it means that either it has reached the end or there is already another piece in the grid array.
-6.
+7.
 
  */
 
@@ -174,6 +174,8 @@ function playerMove(dir) { //this prevent the grid from exiting on the right/lef
     }
 }
 
+let farewell = document.querySelector("#farewell");
+
 function playerReset() {
 
     player.matrix = createPiece(pieces[Math.floor(Math.random() * pieces.length)]);
@@ -182,6 +184,8 @@ function playerReset() {
     if (collide(grid_array, player)) { //this is the condition that checks if there is a collision with the top of the map
         grid_array.forEach(row => row.fill(0));
         game = false;
+        farewell.textContent = `Oh no do you want to try again? You've gotten ${points.toString()}`;
+        welcome.textContent = "Welcome and Enjoy! Select a difficulty level to begin";
         gameOver.style.display = "flex";
         myMusic.pause();
         gameOverMusic.play();
@@ -289,31 +293,32 @@ function playerDrop() { //this function means that when the piece moves 1 grid d
 
 easy.addEventListener("click", function(){
     interval = 1000;
-    welcome.textContent = "Welcome and Enjoy! Select a difficulty level to begin";
+    welcome.textContent = "You've selected Easy Mode!";
 })
 
 hard.addEventListener("click", function() {
     interval = 500;
-    welcome.textContent = "Welcome and Enjoy! Select a difficulty level to begin";
+    welcome.textContent = "You've selected Hard Mode!";
 })
 
 start.addEventListener("click", function() {
     if (game == false && interval > 0) {
-        start.textContent = "Click here to mute the music"
+        start.textContent = "Click here to mute the music";
+        myMusic.play();music = true;
         game = true;
         draw();
         generateSpare();
         update();
-        if (music == false) {
-            myMusic.play();
-            music = true;
-        } else {
-            myMusic.pause();
-            music = false;
-        }
-    } else {
+    } else if (game == false) {
         welcome.textContent = "Seriously? Select a difficulty level! Then click play again!"
+    } else if (music == true) {
+        myMusic.pause();
+        music = false;
+    } else if (music == false) {
+        myMusic.play();
+        music = true;
     }
+
 
 })
 
@@ -376,9 +381,10 @@ function showScreen() {
 let gamestart = document.querySelector(".start-screen");
 let startscreen = document.querySelector(".start-screen-gameboy-screen-animation")
 abutton.addEventListener("click", function() {
+    startscreen.textContent = "";
+    startup.play();
     startscreen.style.backgroundSize = "cover";
     startscreen.style.backgroundImage = 'url("media/gameboy-start.gif")';
-    startup.play();
     var mygame = setTimeout(showScreen, 2000);
     body.style.cursor = "crosshair";
 })
@@ -389,7 +395,7 @@ let down = document.querySelector(".guide-panel-direction-down");
 let left = document.querySelector(".guide-panel-direction-left");
 let right = document.querySelector(".guide-panel-direction-right");
 let rotateleft = document.querySelector(".guide-panel-actions-rotateleft");
-let swapmove = document.querySelector(".guide-panel-actions-swap")
+let swapmove = document.querySelector(".guide-panel-actions-swap");
 let rotateright = document.querySelector(".guide-panel-actions-rotateright");
 let dropmax = document.querySelector(".guide-panel-actions-dropmax")
 
@@ -424,4 +430,8 @@ rotateleft.addEventListener("mouseover", function() {
 rotateright.addEventListener("mouseover", function() {
     description.textContent = "This rotates the piece right once.";
 })
+
+
+
+
 
