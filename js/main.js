@@ -12,6 +12,7 @@ Logic: Create a grid of "0"s and use "1"s to indicate if a space is already fill
 
  */
 
+let body = document.querySelector("body");
 let canvas = document.querySelector("#canvas");
 let context = canvas.getContext("2d");
 let game_grid = [10,20]
@@ -243,7 +244,7 @@ document.addEventListener("keydown", event => {
         playerRotate(1);
     } else if (event.key === " ") {
         dropMax();
-    } else if (event.key === "z") {
+    } else if (event.key === "ArrowUp") {
         swap();
     }
 })
@@ -377,4 +378,5 @@ abutton.addEventListener("click", function() {
     startscreen.style.backgroundImage = 'url("media/gameboy-start.gif")';
     startup.play();
     var mygame = setTimeout(showScreen, 2000);
+    body.style.cursor = "crosshair";
 })
