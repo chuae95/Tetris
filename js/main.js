@@ -24,6 +24,8 @@ let game = false;
 let start = document.querySelector(".start");
 let myMusic = document.getElementById("audio");
 let line = document.querySelector("#line");
+let startup = document.querySelector("#startup");
+let abutton = document.querySelector(".start-screen-gameboy-a")
 let music = false;
 let gameOver = document.querySelector(".modal");
 let easy = document.querySelector(".easy");
@@ -31,6 +33,7 @@ let hard = document.querySelector(".hard");
 let welcome = document.querySelector(".welcome");
 let restart = document.querySelectorAll(".yes");
 let storage = document.querySelector("#storage");
+let gameOverMusic = document.querySelector("#gameOverMusic");
 let context2 = storage.getContext("2d");
 let spare = [];
 let temp = [];
@@ -180,6 +183,7 @@ function playerReset() {
         game = false;
         gameOver.style.display = "flex";
         myMusic.pause();
+        gameOverMusic.play();
         music = false;
         player.swap = false;
     }
@@ -306,7 +310,7 @@ start.addEventListener("click", function() {
             music = false;
         }
     } else {
-        welcome.textContent = "Seriously? Select a difficulty level!"
+        welcome.textContent = "Seriously? Select a difficulty level! Then click play again!"
     }
 
 })
@@ -361,3 +365,16 @@ function swap() {
         })
     }
 }
+
+function showScreen() {
+    gamestart.style.display = "none";
+}
+
+let gamestart = document.querySelector(".start-screen");
+let startscreen = document.querySelector(".start-screen-gameboy-screen-animation")
+abutton.addEventListener("click", function() {
+    startscreen.style.backgroundSize = "cover";
+    startscreen.style.backgroundImage = 'url("media/gameboy-start.gif")';
+    startup.play();
+    var mygame = setTimeout(showScreen, 2000);
+})
