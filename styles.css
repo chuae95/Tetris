@@ -187,7 +187,7 @@ body {
 
 .start-screen {
   position: fixed;
-  display: flex;
+  display: none;
   top: 0;
   left: 0;
   width: 100VW;
@@ -293,6 +293,56 @@ body {
   background-color: black;
   border: 1px solid #34ff67;
   margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+.guide-description {
+  width: 80%;
+  height: 50px;
+  background-color: black;
+  border: 1px solid #34ff67;
+  margin-top: 10px;
+}
+.guide-panel {
+  width: 80%;
+  height: 150px;
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-evenly;
+}
+.guide-panel-direction {
+  width: 45%;
+  height: 100%;
+  display: grid;
+  grid-template: 1fr 1fr/1fr 1fr 1fr;
+  color: #34ff67;
+}
+.guide-panel-direction div {
+  grid-area: 1/2/2/3;
+  background-color: black;
+  width: 80%;
+  height: 80%;
+  -webkit-box-shadow: 0px 8px 0px #34ff67;
+  -moz-box-shadow: 0px 8px 0px #34ff67;
+  box-shadow: 0px 8px 0px #34ff67;
+  border: 1px solid #34ff67;
+}
+.guide-panel-direction div:hover {
+  position: relative;
+  top: 8px;
+  -webkit-box-shadow: 0px 2px 0px #34ff67;
+  -moz-box-shadow: 0px 2px 0px #34ff67;
+  box-shadow: 0px 2px 0px #34ff67;
+}
+.guide-panel-actions {
+  width: 45%;
+  height: 100%;
+  background-color: black;
+  border: 1px solid #34ff67;
+  grid-template: 1fr 1fr/1fr 1fr 1fr;
 }
 
 /*# sourceMappingURL=styles.css.map */

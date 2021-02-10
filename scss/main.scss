@@ -214,7 +214,8 @@ body {
 
 .start-screen {
   position: fixed;
-  display: flex;
+  //display: flex;
+  display: none;
   top: 0;
   left: 0;
   width: 100VW;
@@ -333,6 +334,61 @@ body {
   background-color: black;
   border: 1px solid rgba(52,255,103,255);
   margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
 
 
+  &-description {
+    width: 80%;
+    height: 50px;
+    background-color: black;
+    border: 1px solid rgba(52,255,103,255);
+    margin-top: 10px;
+  }
+
+  &-panel {
+    width: 80%;
+    height: 150px;
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+
+    &-direction {
+      width: 45%;
+      height: 100%;
+      display: grid;
+      grid-template: 1fr 1fr / 1fr 1fr 1fr;
+      color: rgba(52,255,103,255);
+
+      div {
+        grid-area: 1/2/2/3;
+        background-color: black;
+        width: 80%;
+        height: 80%;
+        -webkit-box-shadow: 0px 8px 0px rgba(52,255,103,255);
+        -moz-box-shadow: 0px 8px 0px rgba(52,255,103,255);
+        box-shadow: 0px 8px 0px rgba(52,255,103,255);
+        border: 1px solid rgba(52,255,103,255);
+
+        &:hover {
+          position: relative;
+          top: 8px;
+          -webkit-box-shadow: 0px 2px 0px rgba(52,255,103,255);
+          -moz-box-shadow: 0px 2px 0px rgba(52,255,103,255);
+          box-shadow: 0px 2px 0px rgba(52,255,103,255);
+        }
+      }
+    }
+
+    &-actions {
+      width: 45%;
+      height: 100%;
+      background-color: black;
+      border: 1px solid rgba(52,255,103,255);
+      grid-template: 1fr 1fr / 1fr 1fr 1fr;
+    }
+  }
 }
