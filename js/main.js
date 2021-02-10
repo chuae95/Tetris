@@ -17,7 +17,7 @@ let canvas = document.querySelector("#canvas");
 let context = canvas.getContext("2d");
 let game_grid = [10,20]
 let grid_array = [];
-context.scale(45,45);
+context.scale(40,40);
 const pieces = "ILJOTSZ";
 let score = document.querySelector(".score");
 let points = 0;
@@ -244,7 +244,7 @@ document.addEventListener("keydown", event => {
         playerRotate(1);
     } else if (event.key === " ") {
         dropMax();
-    } else if (event.key === "ArrowUp") {
+    } else if (event.key === "w") {
         swap();
     }
 })
@@ -379,4 +379,46 @@ abutton.addEventListener("click", function() {
     startup.play();
     var mygame = setTimeout(showScreen, 2000);
     body.style.cursor = "crosshair";
+})
+
+let description = document.querySelector(".guide-description");
+let up = document.querySelector(".guide-panel-direction-up");
+let down = document.querySelector(".guide-panel-direction-down");
+let left = document.querySelector(".guide-panel-direction-left");
+let right = document.querySelector(".guide-panel-direction-right");
+let rotateleft = document.querySelector(".guide-panel-actions-rotateleft");
+let swapmove = document.querySelector(".guide-panel-actions-swap")
+let rotateright = document.querySelector(".guide-panel-actions-rotateright");
+let dropmax = document.querySelector(".guide-panel-actions-dropmax")
+
+up.addEventListener("mouseover", function() {
+    description.textContent = "This doesn't do anything.";
+})
+
+down.addEventListener("mouseover", function() {
+    description.textContent = "This moves the piece down by 1 block.";
+})
+
+left.addEventListener("mouseover", function() {
+    description.textContent = "This moves the piece left by 1 block.";
+})
+
+right.addEventListener("mouseover", function() {
+    description.textContent = "This moves the piece right by 1 block.";
+})
+
+dropmax.addEventListener("mouseover", function() {
+    description.textContent = "This drops the piece to the end and starts the next piece.";
+})
+
+swapmove.addEventListener("mouseover", function() {
+    description.textContent = "This swaps the piece and stores it in the 'Stored Box' You will be able to swap each piece once.";
+})
+
+rotateleft.addEventListener("mouseover", function() {
+    description.textContent = "This rotates the piece left once.";
+})
+
+rotateright.addEventListener("mouseover", function() {
+    description.textContent = "This rotates the piece right once.";
 })

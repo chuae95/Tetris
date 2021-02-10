@@ -1,7 +1,7 @@
 body {
   position: fixed;
   display: grid;
-  grid-area: 1fr/65% 35%;
+  grid-area: 1fr/80% 20%;
   top: 0;
   left: 0;
   width: 100%;
@@ -13,19 +13,19 @@ body {
 }
 
 .container {
-  grid-area: 1/1/3/2;
+  grid-area: 1/1/2/2;
   height: 100%;
   display: flex;
   justify-content: center;
   background-color: black;
 }
 .container .gameboy {
-  width: 60%;
-  height: 82.7%;
+  width: 80%;
+  height: 82.8%;
   margin-top: 50px;
   background-color: black;
   display: grid;
-  grid-template: 1fr/50% 50%;
+  grid-template: 1fr/40% 60%;
   border: 1px solid #34ff67;
   font-size: 30px;
 }
@@ -42,7 +42,7 @@ body {
   align-items: center;
 }
 .container .gameboy .description .start {
-  margin-top: 50px;
+  margin-top: 20px;
   border: 1px solid #34ff67;
   background-color: black;
   width: 80%;
@@ -62,7 +62,7 @@ body {
   top: 4px;
 }
 .container .gameboy .description .your_score {
-  margin-top: 50px;
+  margin-top: 20px;
   width: 80%;
   height: 100px;
   color: #34ff67;
@@ -77,14 +77,14 @@ body {
   flex-direction: column;
   width: 80%;
   height: 250px;
-  margin-top: 50px;
+  margin-top: 20px;
   background-color: black;
   border: 1px solid #34ff67;
   color: #34ff67;
 }
 .container .gameboy .description .settings .welcome {
   font-size: 30px;
-  width: 100%;
+  width: 430px;
   height: 30px;
 }
 .container .gameboy .description .settings .options {
@@ -130,7 +130,7 @@ body {
 .container .gameboy .description .store {
   width: 80%;
   height: 250px;
-  margin-top: 50px;
+  margin-top: 20px;
   background-color: black;
   display: flex;
   align-items: center;
@@ -148,12 +148,197 @@ body {
 }
 
 .container_2 {
-  grid-area: 1/2/3/3;
-  background-repeat: no-repeat;
-  background-size: contain;
+  grid-area: 1/2/2/3;
   width: 100%;
   height: 100%;
-  background-image: url("https://i.pinimg.com/originals/5c/9a/49/5c9a49dd36f27acf248b66a0f6affdc1.png");
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  text-align: center;
+  color: #34ff67;
+  font-size: 20px;
+}
+.container_2 .guide {
+  width: 80%;
+  height: 82.8%;
+  border: 3px solid green;
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.container_2 .guide-description {
+  margin-top: 20px;
+  border: 1px solid #34ff67;
+  width: 450px;
+  height: 100px;
+  font-size: 30px;
+}
+.container_2 .guide-panel {
+  margin-top: 20px;
+  border: 1px solid #34ff67;
+  width: 80%;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.container_2 .guide-panel-direction {
+  margin-top: 20px;
+  border: 1px solid #34ff67;
+  width: 80%;
+  height: 45%;
+  display: grid;
+  grid-template: 1fr 1fr/1fr 1fr 1fr;
+}
+.container_2 .guide-panel-direction-up {
+  margin-top: 20px;
+  width: 90%;
+  height: 58%;
+  grid-area: 1/2/2/3;
+  -webkit-box-shadow: 0px 10px 0px #34ff67;
+  -moz-box-shadow: 0px 10px 0px #34ff67;
+  box-shadow: 0px 10px 0px #34ff67;
+  border: 1px solid #34ff67;
+}
+.container_2 .guide-panel-direction-up:hover {
+  border: 1px solid #34ff67;
+  -webkit-box-shadow: 0px 2px 0px #34ff67;
+  -moz-box-shadow: 0px 2px 0px #34ff67;
+  box-shadow: 0px 2px 0px #34ff67;
+  position: relative;
+  top: 8px;
+}
+.container_2 .guide-panel-direction-down {
+  width: 90%;
+  height: 58%;
+  grid-area: 2/2/3/3;
+  -webkit-box-shadow: 0px 10px 0px #34ff67;
+  -moz-box-shadow: 0px 10px 0px #34ff67;
+  box-shadow: 0px 10px 0px #34ff67;
+  border: 1px solid #34ff67;
+}
+.container_2 .guide-panel-direction-down:hover {
+  border: 1px solid #34ff67;
+  -webkit-box-shadow: 0px 2px 0px #34ff67;
+  -moz-box-shadow: 0px 2px 0px #34ff67;
+  box-shadow: 0px 2px 0px #34ff67;
+  position: relative;
+  top: 8px;
+}
+.container_2 .guide-panel-direction-left {
+  width: 90%;
+  height: 58%;
+  grid-area: 2/1/3/2;
+  -webkit-box-shadow: 0px 10px 0px #34ff67;
+  -moz-box-shadow: 0px 10px 0px #34ff67;
+  box-shadow: 0px 10px 0px #34ff67;
+  border: 1px solid #34ff67;
+}
+.container_2 .guide-panel-direction-left:hover {
+  border: 1px solid #34ff67;
+  -webkit-box-shadow: 0px 2px 0px #34ff67;
+  -moz-box-shadow: 0px 2px 0px #34ff67;
+  box-shadow: 0px 2px 0px #34ff67;
+  position: relative;
+  top: 8px;
+}
+.container_2 .guide-panel-direction-right {
+  width: 90%;
+  height: 58%;
+  grid-area: 2/3/3/4;
+  -webkit-box-shadow: 0px 10px 0px #34ff67;
+  -moz-box-shadow: 0px 10px 0px #34ff67;
+  box-shadow: 0px 10px 0px #34ff67;
+  border: 1px solid #34ff67;
+}
+.container_2 .guide-panel-direction-right:hover {
+  border: 1px solid #34ff67;
+  -webkit-box-shadow: 0px 2px 0px #34ff67;
+  -moz-box-shadow: 0px 2px 0px #34ff67;
+  box-shadow: 0px 2px 0px #34ff67;
+  position: relative;
+  top: 8px;
+}
+.container_2 .guide-panel-actions {
+  margin-top: 20px;
+  border: 1px solid #34ff67;
+  width: 80%;
+  height: 45%;
+  display: grid;
+  grid-template: 1fr 1fr/1fr 1fr 1fr;
+}
+.container_2 .guide-panel-actions-dropmax {
+  margin-left: 10%;
+  margin-top: 2%;
+  grid-area: 1/1/2/4;
+  width: 80%;
+  height: 60%;
+  -webkit-box-shadow: 0px 10px 0px #34ff67;
+  -moz-box-shadow: 0px 10px 0px #34ff67;
+  box-shadow: 0px 10px 0px #34ff67;
+  border: 1px solid #34ff67;
+}
+.container_2 .guide-panel-actions-dropmax:hover {
+  border: 1px solid #34ff67;
+  -webkit-box-shadow: 0px 2px 0px #34ff67;
+  -moz-box-shadow: 0px 2px 0px #34ff67;
+  box-shadow: 0px 2px 0px #34ff67;
+  position: relative;
+  top: 8px;
+}
+.container_2 .guide-panel-actions-rotateleft {
+  width: 90%;
+  height: 58%;
+  grid-area: 2/1/3/2;
+  -webkit-box-shadow: 0px 10px 0px #34ff67;
+  -moz-box-shadow: 0px 10px 0px #34ff67;
+  box-shadow: 0px 10px 0px #34ff67;
+  border: 1px solid #34ff67;
+}
+.container_2 .guide-panel-actions-rotateleft:hover {
+  border: 1px solid #34ff67;
+  -webkit-box-shadow: 0px 2px 0px #34ff67;
+  -moz-box-shadow: 0px 2px 0px #34ff67;
+  box-shadow: 0px 2px 0px #34ff67;
+  position: relative;
+  top: 8px;
+}
+.container_2 .guide-panel-actions-rotateright {
+  width: 90%;
+  height: 58%;
+  grid-area: 2/3/3/4;
+  -webkit-box-shadow: 0px 10px 0px #34ff67;
+  -moz-box-shadow: 0px 10px 0px #34ff67;
+  box-shadow: 0px 10px 0px #34ff67;
+  border: 1px solid #34ff67;
+}
+.container_2 .guide-panel-actions-rotateright:hover {
+  border: 1px solid #34ff67;
+  -webkit-box-shadow: 0px 2px 0px #34ff67;
+  -moz-box-shadow: 0px 2px 0px #34ff67;
+  box-shadow: 0px 2px 0px #34ff67;
+  position: relative;
+  top: 8px;
+}
+.container_2 .guide-panel-actions-swap {
+  width: 90%;
+  height: 58%;
+  grid-area: 2/2/3/3;
+  -webkit-box-shadow: 0px 10px 0px #34ff67;
+  -moz-box-shadow: 0px 10px 0px #34ff67;
+  box-shadow: 0px 10px 0px #34ff67;
+  border: 1px solid #34ff67;
+}
+.container_2 .guide-panel-actions-swap:hover {
+  border: 1px solid #34ff67;
+  -webkit-box-shadow: 0px 2px 0px #34ff67;
+  -moz-box-shadow: 0px 2px 0px #34ff67;
+  box-shadow: 0px 2px 0px #34ff67;
+  position: relative;
+  top: 8px;
 }
 
 .modal {
@@ -188,18 +373,18 @@ body {
 
 .start-screen {
   position: fixed;
-  display: none;
+  display: flex;
   top: 0;
   left: 0;
   width: 100VW;
   height: 100VH;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: black;
   justify-content: center;
   align-items: center;
 }
 .start-screen-gameboy {
-  width: 800px;
-  height: 1300px;
+  width: 500px;
+  height: 800px;
   background-color: lightgrey;
   border-radius: 15px 15px 15px 15px;
   display: flex;
@@ -264,10 +449,11 @@ body {
   align-items: center;
   transform: rotate(340deg);
   border-radius: 10px;
+  font-size: 40px;
 }
 .start-screen-gameboy .controls .start-screen-gameboy-buttons .start-screen-gameboy-a {
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
   background-color: red;
   display: flex;
@@ -277,8 +463,8 @@ body {
   transform: rotate(20deg);
 }
 .start-screen-gameboy .controls .start-screen-gameboy-buttons .start-screen-gameboy-b {
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
   background-color: black;
   display: flex;
@@ -286,64 +472,6 @@ body {
   align-items: center;
   color: white;
   transform: rotate(20deg);
-}
-
-.guide {
-  width: 80%;
-  height: 250px;
-  background-color: black;
-  border: 1px solid #34ff67;
-  margin-top: 50px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-}
-.guide-description {
-  width: 80%;
-  height: 50px;
-  background-color: black;
-  border: 1px solid #34ff67;
-  margin-top: 10px;
-}
-.guide-panel {
-  width: 80%;
-  height: 150px;
-  margin-top: 10px;
-  display: flex;
-  flex-wrap: nowrap;
-  justify-content: space-evenly;
-}
-.guide-panel-direction {
-  width: 45%;
-  height: 100%;
-  display: grid;
-  grid-template: 1fr 1fr/1fr 1fr 1fr;
-  color: #34ff67;
-}
-.guide-panel-direction div {
-  grid-area: 1/2/2/3;
-  background-color: black;
-  width: 80%;
-  height: 80%;
-  -webkit-box-shadow: 0px 8px 0px #34ff67;
-  -moz-box-shadow: 0px 8px 0px #34ff67;
-  box-shadow: 0px 8px 0px #34ff67;
-  border: 1px solid #34ff67;
-}
-.guide-panel-direction div:hover {
-  position: relative;
-  top: 8px;
-  -webkit-box-shadow: 0px 2px 0px #34ff67;
-  -moz-box-shadow: 0px 2px 0px #34ff67;
-  box-shadow: 0px 2px 0px #34ff67;
-}
-.guide-panel-actions {
-  width: 45%;
-  height: 100%;
-  background-color: black;
-  border: 1px solid #34ff67;
-  grid-template: 1fr 1fr/1fr 1fr 1fr;
 }
 
 /*# sourceMappingURL=styles.css.map */
