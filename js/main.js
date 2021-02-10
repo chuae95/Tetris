@@ -289,16 +289,17 @@ function playerDrop() { //this function means that when the piece moves 1 grid d
 
 easy.addEventListener("click", function(){
     interval = 1000;
-    welcome.textContent = "Welcome and Enjoy!Select a difficulty level to begin";
+    welcome.textContent = "Welcome and Enjoy! Select a difficulty level to begin";
 })
 
 hard.addEventListener("click", function() {
     interval = 500;
-    welcome.textContent = "Welcome and Enjoy!Select a difficulty level to begin";
+    welcome.textContent = "Welcome and Enjoy! Select a difficulty level to begin";
 })
 
 start.addEventListener("click", function() {
     if (game == false && interval > 0) {
+        start.textContent = "Click here to mute the music"
         game = true;
         draw();
         generateSpare();
@@ -324,6 +325,7 @@ restart.forEach((button) => {
         context.fillRect(0,0,game_grid[0],game_grid[1])
         context2.fillStyle = "black";
         context2.fillRect(0, 0, storage.width, storage.height);
+        start.textContent = "Start the game!"
     })
 })
 
@@ -422,3 +424,4 @@ rotateleft.addEventListener("mouseover", function() {
 rotateright.addEventListener("mouseover", function() {
     description.textContent = "This rotates the piece right once.";
 })
+
