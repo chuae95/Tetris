@@ -9,53 +9,53 @@ body {
   overflow-y: hidden;
   overflow-x: hidden;
   background-color: white;
+  font-family: "ZCOOL QingKe HuangYou", cursive;
 }
 
 .container {
   grid-area: 1/1/3/2;
   display: flex;
   justify-content: center;
-  background-color: grey;
+  background-color: black;
 }
 .container .gameboy {
   width: 60%;
-  height: 76.5%;
+  height: 66.8%;
   margin-top: 50px;
   background-color: black;
   display: grid;
   grid-template: 1fr 1fr/50% 50%;
-  border: 3px solid white;
+  border: 1px solid #34ff67;
   font-size: 30px;
 }
 .container .gameboy #canvas {
   grid-area: 1/1/3/2;
-  border: 3px solid white;
+  border: 1px solid #34ff67;
 }
 .container .gameboy .description {
   text-align: center;
-  color: black;
+  color: #34ff67;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 .container .gameboy .description .start {
   margin-top: 50px;
-  background-color: white;
+  border: 1px solid #34ff67;
+  background-color: black;
   width: 80%;
   height: 60px;
   -webkit-transition: all 0.1s;
   -moz-transition: all 0.1s;
   transition: all 0.1s;
-  -webkit-box-shadow: 0px 10px 0px red;
-  -moz-box-shadow: 0px 10px 0px red;
-  box-shadow: 0px 10px 0px red;
+  -webkit-box-shadow: 0px 10px 0px #34ff67;
+  -moz-box-shadow: 0px 10px 0px #34ff67;
+  box-shadow: 0px 10px 0px #34ff67;
 }
 .container .gameboy .description .start:hover {
-  background-color: red;
-  color: white;
-  -webkit-box-shadow: 0px 2px 0px red;
-  -moz-box-shadow: 0px 2px 0px red;
-  box-shadow: 0px 2px 0px red;
+  -webkit-box-shadow: 0px 2px 0px #34ff67;
+  -moz-box-shadow: 0px 2px 0px #34ff67;
+  box-shadow: 0px 2px 0px #34ff67;
   position: relative;
   top: 4px;
 }
@@ -63,7 +63,9 @@ body {
   margin-top: 50px;
   width: 80%;
   height: 100px;
-  background-image: url("media/score.png");
+  color: #34ff67;
+  background-color: black;
+  border: 1px solid #34ff67;
 }
 .container .gameboy .description .your_score div {
   font-size: 60px;
@@ -74,7 +76,9 @@ body {
   width: 80%;
   height: 250px;
   margin-top: 50px;
-  background-color: white;
+  background-color: black;
+  border: 1px solid #34ff67;
+  color: #34ff67;
 }
 .container .gameboy .description .settings .welcome {
   font-size: 30px;
@@ -91,41 +95,33 @@ body {
   padding-top: 15px;
   width: 40%;
   height: 40%;
-  background-color: white;
-  color: green;
   border: 2px solid green;
-  -webkit-box-shadow: 0px 10px 0px green;
-  -moz-box-shadow: 0px 10px 0px green;
-  box-shadow: 0px 10px 0px green;
+  -webkit-box-shadow: 0px 10px 0px #34ff67;
+  -moz-box-shadow: 0px 10px 0px #34ff67;
+  box-shadow: 0px 10px 0px #34ff67;
 }
 .container .gameboy .description .settings .options .easy:hover {
-  background-color: green;
-  border: 2px solid green;
-  color: white;
+  border: 2px solid #34ff67;
   position: relative;
   top: 8px;
-  -webkit-box-shadow: 0px 2px 0px green;
-  -moz-box-shadow: 0px 2px 0px green;
-  box-shadow: 0px 2px 0px green;
+  -webkit-box-shadow: 0px 2px 0px #34ff67;
+  -moz-box-shadow: 0px 2px 0px #34ff67;
+  box-shadow: 0px 2px 0px #34ff67;
 }
 .container .gameboy .description .settings .options .hard {
   padding-top: 15px;
   width: 40%;
   height: 40%;
-  background-color: white;
-  color: red;
-  -webkit-box-shadow: 0px 10px 0px red;
-  -moz-box-shadow: 0px 10px 0px red;
-  box-shadow: 0px 10px 0px red;
-  border: 2px solid red;
+  -webkit-box-shadow: 0px 10px 0px #34ff67;
+  -moz-box-shadow: 0px 10px 0px #34ff67;
+  box-shadow: 0px 10px 0px #34ff67;
+  border: 1px solid #34ff67;
 }
 .container .gameboy .description .settings .options .hard:hover {
-  background-color: red;
-  border: 2px solid red;
-  color: white;
-  -webkit-box-shadow: 0px 2px 0px red;
-  -moz-box-shadow: 0px 2px 0px red;
-  box-shadow: 0px 2px 0px red;
+  border: 1px solid #34ff67;
+  -webkit-box-shadow: 0px 2px 0px #34ff67;
+  -moz-box-shadow: 0px 2px 0px #34ff67;
+  box-shadow: 0px 2px 0px #34ff67;
   position: relative;
   top: 8px;
 }
@@ -133,17 +129,19 @@ body {
   width: 80%;
   height: 250px;
   margin-top: 50px;
-  background-color: white;
+  background-color: black;
   display: flex;
   align-items: center;
   justify-content: center;
+  color: #34ff67;
+  border: 1px solid #34ff67;
 }
 .container .gameboy .description .store .display-box {
+  border: 1px solid #34ff67;
   display: flex;
   align-items: flex-end;
   justify-content: center;
   width: 60%;
-  background-color: black;
   height: 70%;
 }
 
@@ -244,13 +242,21 @@ body {
   justify-content: center;
   align-items: center;
 }
-.start-screen-gameboy .controls .start-screen-gameboy-controls-pad {
-  background-image: url("media/controls.png");
+.start-screen-gameboy .controls .start-screen-gameboy-controls-verticalpad {
+  position: absolute;
+  background-color: black;
+  width: 1.5%;
+  height: 9%;
+}
+.start-screen-gameboy .controls .start-screen-gameboy-controls-horizontalpad {
+  position: absolute;
+  background-color: black;
+  width: 5%;
+  height: 3%;
 }
 .start-screen-gameboy .controls .start-screen-gameboy-buttons {
-  width: 30%;
+  width: 40%;
   height: 40%;
-  background-color: white;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -258,24 +264,26 @@ body {
   border-radius: 10px;
 }
 .start-screen-gameboy .controls .start-screen-gameboy-buttons .start-screen-gameboy-a {
-  width: 50px;
-  height: 50px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
-  background-color: black;
+  background-color: red;
   display: flex;
   justify-content: center;
   align-items: center;
   color: white;
+  transform: rotate(20deg);
 }
 .start-screen-gameboy .controls .start-screen-gameboy-buttons .start-screen-gameboy-b {
-  width: 50px;
-  height: 50px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
   background-color: black;
   display: flex;
   justify-content: center;
   align-items: center;
   color: white;
+  transform: rotate(20deg);
 }
 
 /*# sourceMappingURL=styles.css.map */
