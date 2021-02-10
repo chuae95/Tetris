@@ -17,7 +17,7 @@ let canvas = document.querySelector("#canvas");
 let context = canvas.getContext("2d");
 let game_grid = [10,20]
 let grid_array = [];
-context.scale(60,60);
+context.scale(45,45);
 const pieces = "ILJOTSZ";
 let score = document.querySelector(".score");
 let points = 0;

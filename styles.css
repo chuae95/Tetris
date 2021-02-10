@@ -4,8 +4,8 @@ body {
   grid-area: 1fr/65% 35%;
   top: 0;
   left: 0;
-  width: 100VW;
-  height: 100VH;
+  width: 100%;
+  height: 100%;
   overflow-y: hidden;
   overflow-x: hidden;
   background-color: white;
@@ -14,6 +14,7 @@ body {
 
 .container {
   grid-area: 1/1/3/2;
+  height: 100%;
   display: flex;
   justify-content: center;
   background-color: black;
