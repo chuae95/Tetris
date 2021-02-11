@@ -393,7 +393,7 @@ abutton.addEventListener("click", function() {
     startscreen.style.backgroundSize = "cover";
     startscreen.style.backgroundImage = 'url("media/gameboy-start.gif")';
     var mygame = setTimeout(showScreen, 2000);
-    body.style.cursor = "crosshair";
+    body.style.cursor = 'url("media/cursor.cur"), auto';
 })
 
 
