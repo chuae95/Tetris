@@ -1,46 +1,66 @@
-/*
-Tetris Code
-Logic: Create a grid of "0"s and use "1"s to indicate if a space is already filled.
-1.Create the grid with a 10 * 20 layout and fill it with 0s by using a nested array
-2.Create a single piece and begin by including functionalities such as moving the piece and dropping the piece per second
-3.Create the boundaries for the bottom and sides
-4.Create the logic to update the values of the 10x20 grid of "0"s using the x, y position and the piece configuration.
-5.The grid should only be updated when the fix is deemed to be at the bottom or has labnded on a separate piece. This is when a second piece should be generated
-6
-5.If the values cannot be updated, then it means that either it has reached the end or there is already another piece in the grid array.
-7.
-
- */
-
+//This is the compiled list of variables used in the Tetris game and DOM elements.
 let body = document.querySelector("body");
-let canvas = document.querySelector("#canvas");
-let context = canvas.getContext("2d");
-let game_grid = [10,20]
-let grid_array = [];
-context.scale(40,40);
-const pieces = "ILJOTSZ";
 let score = document.querySelector(".score");
-let points = 0;
-let game = false;
 let start = document.querySelector(".start");
-let myMusic = document.getElementById("audio");
-let line = document.querySelector("#line");
 let startup = document.querySelector("#startup");
 let abutton = document.querySelector(".start-screen-gameboy-a")
-let music = false;
 let gameOver = document.querySelector(".modal");
 let easy = document.querySelector(".easy");
 let hard = document.querySelector(".hard");
 let welcome = document.querySelector(".welcome");
 let restart = document.querySelectorAll(".yes");
-let storage = document.querySelector("#storage");
-let gameOverMusic = document.querySelector("#gameOverMusic");
-let context2 = storage.getContext("2d");
+let gamestart = document.querySelector(".start-screen");
+let startscreen = document.querySelector(".start-screen-gameboy-screen-animation");
+let description = document.querySelector(".guide-description");
+let up = document.querySelector(".guide-panel-direction-up");
+let down = document.querySelector(".guide-panel-direction-down");
+let left = document.querySelector(".guide-panel-direction-left");
+let right = document.querySelector(".guide-panel-direction-right");
+let rotateleft = document.querySelector(".guide-panel-actions-rotateleft");
+let swapmove = document.querySelector(".guide-panel-actions-swap");
+let rotateright = document.querySelector(".guide-panel-actions-rotateright");
+let dropmax = document.querySelector(".guide-panel-actions-dropmax");
+
+//These are the variables used to support the backend logic of the game
+let points = 0;
+let game = false;
+let music = false;
+let game_grid = [10,20]
+let grid_array = [];
+const pieces = "ILJOTSZ";
 let spare = [];
 let temp = [];
-let a = 0;
-let b = 10;
+const colors = [null, "red", "blue", "green", "yellow", "purple", "orange", "brown"];
+const player = {
+    pos: {x:4, y: 0}, //First piece will always be created 4 blocks from the left.
+    matrix: createPiece(pieces[Math.floor(Math.random() * pieces.length)]),
+    swap: false
+}
 
+//These are the audio files to be called.
+let farewell = document.querySelector("#farewell");
+let myMusic = document.getElementById("audio");
+let line = document.querySelector("#line");
+let gameOverMusic = document.querySelector("#gameOverMusic");
+
+
+//These are the canvasses that are used on the page. One is for the playing grid, one is for the grid that stores the extra shape
+let canvas = document.querySelector("#canvas");
+let context = canvas.getContext("2d");
+let storage = document.querySelector("#storage");
+let context2 = storage.getContext("2d");
+context.scale(40,40);
+context2.scale(30,30);
+context2.fillStyle = "black";
+context2.fillRect(0,0,storage.width,storage.height);
+
+//These are the time variables used to reset the page.
+let lastTime = 0;
+let timeLapse = 0;
+let interval = 0;
+
+//This is the logic to check if there is any completed rows. Once there are, then it will be spliced out of the grid array.
+//When the draw matrix function is called for the canvas then it will remove the colored blocks that are part of the row out of the canvas.
 function gridSweep() {
     outer: for (let y = grid_array.length - 1; y > 0 ; y--) {
         for (let x = 0; x < grid_array[y].length; x++) {
@@ -52,17 +72,13 @@ function gridSweep() {
         const row = grid_array.splice(y, 1)[0].fill(0);
         grid_array.unshift(row);
         y++;
-        a++
-        if (a >  b) {
-            interval -= 500;
-            b += 5;
-        }
         points += 50;
         score.textContent = "";
         score.textContent = points.toString();
     }
 }
 
+//This is to check if the grid is able to move. If the position is not "0", then the cube will not be able to move there.
 function collide(grid_array, player) {
     const [m, o] = [player.matrix, player.pos];
     for (let y = 0; y < m.length; y++) {
@@ -121,6 +137,7 @@ function createPiece(type) {
     }
 }
 
+//This creates the array that allows us to check for the position when the shape moves.
 for (let r = 0; r < game_grid[1]; r++) {
     grid_array.push([]);
     for (let c = 0; c < game_grid[0]; c++) {
@@ -128,18 +145,19 @@ for (let r = 0; r < game_grid[1]; r++) {
     }
 }
 
+//This updates the value of the pieces in the matrix.
 function merge(arena, player) {
     player.matrix.forEach((row, y) => {
         row.forEach((value, x) => {
             if (value != 0) {
-                grid_array[y + player.pos.y][x + player.pos.x] = value; //this will update the values in the array we created above.
+                grid_array[y + player.pos.y][x + player.pos.x] = value;
             }
         })
     })
 
 }
 
-
+//This draws the updated matrix based on the grid array values. Suppose there is a piece at the bottom, when it reaches that y position (19), this notes that there is a value there and sums it up with 0. The grid is then colored based on the const Colors.
 function drawMatrix(matrix, offset) { //offset will keep track of how much the pieces have been moved
     matrix.forEach((row, y) => {
         row.forEach((value, x) => {
@@ -151,10 +169,7 @@ function drawMatrix(matrix, offset) { //offset will keep track of how much the p
     });
 }
 
-let lastTime = 0;
-let timeLapse = 0;
-let interval = 0;
-const colors = [null, "red", "blue", "green", "yellow", "purple", "orange", "brown"];
+
 
 function update(time = 0) {
     const timeDiff = time - lastTime;
@@ -167,17 +182,16 @@ function update(time = 0) {
     requestAnimationFrame(update);
 }
 
-function playerMove(dir) { //this prevent the grid from exiting on the right/left or intersects with other pieces
+function playerMove(dir) { //this prevent the grid from exiting on the right/left or intersecting with other pieces
     player.pos.x += dir;
     if (collide(grid_array, player)) {
         player.pos.x -= dir;
     }
 }
 
-let farewell = document.querySelector("#farewell");
-
+//Every time a new piece is dropped, we will check if there is a collision at the top. Left,right and bottom collisions are eliminated with the logic applied.
+//Once true, the game is reset and the player can play again.
 function playerReset() {
-
     player.matrix = createPiece(pieces[Math.floor(Math.random() * pieces.length)]);
     player.pos.y = 0;
     player.pos.x = Math.floor(grid_array[0].length/2) - Math.floor(player.matrix[0].length / 2);
@@ -194,12 +208,7 @@ function playerReset() {
     }
 }
 
-const player = {
-    pos: {x:4, y: 0},
-    matrix: createPiece(pieces[Math.floor(Math.random() * pieces.length)]),
-    swap: false
-}
-
+//tuple switch to allow for rotations
 function rotate(matrix, dir) {
     for (let y = 0; y < matrix.length; y++) {
         for (let x = 0; x < y; x++) {
@@ -224,8 +233,8 @@ function playerRotate(dir) {
     let offset = 1;
     rotate(player.matrix, dir);
     while (collide(grid_array, player)) {
-        player.pos.x += offset; //check to the right
-        offset = -(offset + (offset > 0 ? 1 : -1));
+        player.pos.x += offset;
+        offset = -(offset + (offset > 0 ? 1 : -1)); //this checks (basis the length of the piece) that when the piece is rotated that it doesn't collide with the sides.
         if (offset > player.matrix[0].length) {
             rotate(player.matrix, -dir);
             player.pos.x = pos;
@@ -234,7 +243,7 @@ function playerRotate(dir) {
     }
 }
 
-
+//Controls for piece movements in the page.
 document.addEventListener("keydown", event => {
     if (event.key === "ArrowLeft") {
         playerMove(-1);
@@ -253,6 +262,7 @@ document.addEventListener("keydown", event => {
     }
 })
 
+//Function to let
 function dropMax() {
     if (game == true && interval > 0) {
         while (collide(grid_array, player) != true) {
@@ -270,14 +280,14 @@ function dropMax() {
 
 function draw() {
     if (game == true && interval > 0) {
-        context.fillStyle = "black"; //will "reset" the canvas
+        context.fillStyle = "black"; //will "reset" the canvas so that the canvas can be updated.
         context.fillRect(0, 0, canvas.width, canvas.height);
-        drawMatrix(grid_array, {x: 0, y: 0})
-        drawMatrix(player.matrix, player.pos); //this will call the function
+        drawMatrix(grid_array, {x: 0, y: 0}); //this will call the function to update the entire matrix
+        drawMatrix(player.matrix, player.pos);//this will call the function to update the piece that is being moved
     }
 }
 
-function playerDrop() { //this function means that when the piece moves 1 grid down, the timer is reset
+function playerDrop() { //this function means that when the piece moves 1 grid down, the timer is reset. If collision is detected, then the piece is determined to have hit the bottom and
     if (game == true && interval > 0) {
         player.pos.y += 1;
         if (collide(grid_array, player)) {
@@ -334,9 +344,7 @@ restart.forEach((button) => {
     })
 })
 
-context2.scale(30,30);
-context2.fillStyle = "black";
-context2.fillRect(0,0,storage.width,storage.height);
+
 
 function generateSpare() {
     spare = createPiece(pieces[Math.floor(Math.random() * pieces.length)]);
@@ -378,8 +386,7 @@ function showScreen() {
     gamestart.style.display = "none";
 }
 
-let gamestart = document.querySelector(".start-screen");
-let startscreen = document.querySelector(".start-screen-gameboy-screen-animation")
+
 abutton.addEventListener("click", function() {
     startscreen.textContent = "";
     startup.play();
@@ -389,15 +396,7 @@ abutton.addEventListener("click", function() {
     body.style.cursor = "crosshair";
 })
 
-let description = document.querySelector(".guide-description");
-let up = document.querySelector(".guide-panel-direction-up");
-let down = document.querySelector(".guide-panel-direction-down");
-let left = document.querySelector(".guide-panel-direction-left");
-let right = document.querySelector(".guide-panel-direction-right");
-let rotateleft = document.querySelector(".guide-panel-actions-rotateleft");
-let swapmove = document.querySelector(".guide-panel-actions-swap");
-let rotateright = document.querySelector(".guide-panel-actions-rotateright");
-let dropmax = document.querySelector(".guide-panel-actions-dropmax")
+
 
 up.addEventListener("mouseover", function() {
     description.textContent = "This doesn't do anything.";
